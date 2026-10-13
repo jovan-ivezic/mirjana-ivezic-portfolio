@@ -11,20 +11,17 @@ const countAll = projects.length;
   <div class="container">
     <div class="portfolio-header">
       <div class="header-text-group">
-        <div class="section-badge">
-          <span>02 / SELECTED WORK & ARCHIVES</span>
-        </div>
-        <h2 class="section-heading">Featured Design Works</h2>
+        <h2 class="section-heading">Izabrani projekti</h2>
         <p class="section-description">
-          Filter between 3D photorealistic visualization projects and AutoCAD technical construction packages. Click any project to inspect high-resolution imagery and download native project files (.MAX and .DWG).
+          Filter za 3ds Max 3D rendere i AutoCAD tehničku dokumentaciju. Kliknite na projekat za uvećan JPG prikaz i direktno preuzimanje izvornog dizajn fajla (.MAX ili .DWG).
         </p>
       </div>
 
       <!-- Linear style filter tabs -->
       <div class="filter-wrapper">
-        <div class="filter-tabs" role="tablist" aria-label="Project Categories">
+        <div class="filter-tabs" role="tablist" aria-label="Kategorije radova">
           <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
-            <span>All Works</span>
+            <span>Svi radovi</span>
             <span class="filter-count">{countAll}</span>
           </button>
           <button class="filter-tab" data-filter="3dsmax" role="tab" aria-selected="false">
@@ -51,7 +48,7 @@ const countAll = projects.length;
           data-project-index={index}
           tabindex="0"
           role="button"
-          aria-label={`View details for ${project.title}`}
+          aria-label={`Pregled projekta: ${project.title}`}
         >
           <div class="card-media-wrapper">
             <img 
@@ -65,7 +62,7 @@ const countAll = projects.length;
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                 </svg>
-                <span>Inspect JPG & Download File</span>
+                <span>Pregledaj JPG i preuzmi fajl</span>
               </span>
             </div>
 
@@ -99,7 +96,7 @@ const countAll = projects.length;
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                 </svg>
-                <span>{project.fileFormat}</span>
+                <span>Preuzmi {project.fileFormat}</span>
               </div>
             </div>
           </div>
@@ -108,7 +105,6 @@ const countAll = projects.length;
     </div>
   </div>
 
-  <!-- Reusable Interactive Modal -->
   <ProjectModal />
 </section>
 
@@ -173,7 +169,6 @@ const countAll = projects.length;
     const modalSizeText = document.getElementById('modal-size-text');
     const modalCounter = document.getElementById('modal-counter');
 
-    // Projects array from global window
     const projectsList = (window as any).__PORTFOLIO_PROJECTS__ || [];
     let currentProjectIndex = 0;
 
@@ -200,14 +195,14 @@ const countAll = projects.length;
       if (modalArea) modalArea.textContent = proj.area;
 
       if (modalBadge && modalCategoryText) {
-        modalCategoryText.textContent = proj.category === '3dsmax' ? '3DS MAX • CGI' : 'AUTOCAD • TECHNICAL';
+        modalCategoryText.textContent = proj.category === '3dsmax' ? '3DS MAX • 3D RENDER' : 'AUTOCAD • TEHNIČKI CRTEŽ';
         modalBadge.className = `modal-category-badge ${proj.category === '3dsmax' ? 'badge-3ds' : 'badge-cad'}`;
       }
 
       if (modalDownloadBtn && modalDownloadLabel && modalFormatTag && modalSizeText) {
         modalDownloadBtn.href = proj.downloadFile;
         modalDownloadBtn.download = proj.downloadFileName;
-        modalDownloadLabel.textContent = `Download Native Design File (${proj.fileFormat})`;
+        modalDownloadLabel.textContent = `Preuzmi dizajn fajl (${proj.fileFormat})`;
         modalFormatTag.textContent = proj.fileFormat;
         modalSizeText.textContent = proj.fileSize;
       }
@@ -216,7 +211,7 @@ const countAll = projects.length;
         modalCounter.textContent = `${index + 1} / ${projectsList.length}`;
       }
 
-      // Inject specifications
+      // Specifications
       if (modalSpecsList) {
         modalSpecsList.innerHTML = '';
         if (proj.specifications) {
@@ -232,7 +227,7 @@ const countAll = projects.length;
         }
       }
 
-      // Inject software tags
+      // Software tags
       if (modalSoftwareTags) {
         modalSoftwareTags.innerHTML = '';
         if (proj.software) {
@@ -245,7 +240,6 @@ const countAll = projects.length;
         }
       }
 
-      // Open overlay
       if (modalOverlay) {
         modalOverlay.classList.add('active');
         modalOverlay.setAttribute('aria-hidden', 'false');
@@ -261,7 +255,6 @@ const countAll = projects.length;
       }
     }
 
-    // Attach card clicks
     projectCards.forEach(card => {
       card.addEventListener('click', () => {
         const indexStr = card.getAttribute('data-project-index');
@@ -279,7 +272,6 @@ const countAll = projects.length;
       });
     });
 
-    // Close handlers
     modalCloseBtn?.addEventListener('click', closeModal);
     modalBackdrop?.addEventListener('click', closeModal);
 
@@ -291,7 +283,6 @@ const countAll = projects.length;
       openModalWithIndex(currentProjectIndex + 1);
     });
 
-    // Keyboard handlers
     window.addEventListener('keydown', (e) => {
       if (!modalOverlay?.classList.contains('active')) return;
 
@@ -308,8 +299,8 @@ const countAll = projects.length;
 
 <style>
   .portfolio-section {
-    padding-top: 80px;
-    padding-bottom: 100px;
+    padding-top: 70px;
+    padding-bottom: 90px;
     border-top: 1px solid var(--border-subtle);
   }
 
@@ -318,7 +309,7 @@ const countAll = projects.length;
     align-items: flex-end;
     justify-content: space-between;
     gap: 32px;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
   }
 
@@ -347,10 +338,9 @@ const countAll = projects.length;
     box-shadow: 0 0 6px rgba(143, 191, 247, 0.6);
   }
 
-  /* Grid Layout */
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 24px;
   }
 
@@ -364,20 +354,20 @@ const countAll = projects.length;
     cursor: pointer;
     transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth), opacity var(--transition-fast);
     outline: none;
+    box-shadow: var(--card-shadow);
   }
 
   .project-card:hover, .project-card:focus-visible {
     border-color: var(--border-medium);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    background: var(--bg-card-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
   }
 
   .card-media-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9.5;
-    background: #090a0c;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-surface);
     overflow: hidden;
     border-bottom: 1px solid var(--border-subtle);
   }
@@ -390,13 +380,13 @@ const countAll = projects.length;
   }
 
   .project-card:hover .card-img {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 
   .card-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(8, 9, 10, 0.45);
+    background: rgba(8, 9, 10, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -412,11 +402,11 @@ const countAll = projects.length;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 14px;
+    padding: 7px 14px;
     border-radius: var(--radius-full);
     background: rgba(8, 9, 10, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 500;
     color: #ffffff;
     backdrop-filter: blur(8px);
@@ -430,9 +420,9 @@ const countAll = projects.length;
 
   .card-badges {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 10px;
+    left: 10px;
+    right: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -441,7 +431,7 @@ const countAll = projects.length;
 
   .category-tag {
     font-family: var(--font-mono);
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.04em;
     padding: 3px 8px;
@@ -463,17 +453,17 @@ const countAll = projects.length;
 
   .file-tag {
     font-family: var(--font-mono);
-    font-size: 10.5px;
+    font-size: 10px;
     padding: 3px 8px;
     border-radius: 4px;
     background: rgba(15, 16, 18, 0.85);
     border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
+    color: #e5e5e5;
     backdrop-filter: blur(8px);
   }
 
   .card-content {
-    padding: 20px 22px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -483,7 +473,7 @@ const countAll = projects.length;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .card-location {
@@ -497,18 +487,18 @@ const countAll = projects.length;
   }
 
   .card-title {
-    font-size: 17px;
+    font-size: 16.5px;
     font-weight: 600;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     line-height: 1.3;
   }
 
   .card-subtitle {
     font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     line-height: 1.45;
   }
 
@@ -517,7 +507,7 @@ const countAll = projects.length;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 14px;
+    padding-top: 12px;
     border-top: 1px solid var(--border-subtle);
   }
 
@@ -530,7 +520,7 @@ const countAll = projects.length;
     font-family: var(--font-mono);
     font-size: 10px;
     padding: 2px 6px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: 3px;
     color: var(--text-tertiary);
@@ -541,9 +531,8 @@ const countAll = projects.length;
     align-items: center;
     gap: 5px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 10.5px;
     color: var(--text-secondary);
-    transition: color var(--transition-fast);
   }
 
   .project-card:hover .download-hint {

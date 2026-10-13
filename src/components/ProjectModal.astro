@@ -16,9 +16,9 @@ import { projects } from '../data/projects';
 
         <div class="modal-controls">
           <div class="keyboard-hints">
-            <span class="kbd-key">ESC</span> to close
+            <span class="kbd-key">ESC</span> zatvori
           </div>
-          <button id="modal-close-btn" class="modal-icon-btn" aria-label="Close dialog">
+          <button id="modal-close-btn" class="modal-icon-btn" aria-label="Zatvori prozor">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
@@ -26,7 +26,7 @@ import { projects } from '../data/projects';
         </div>
       </div>
 
-      <!-- Main modal layout: Image preview + Project specs sheet -->
+      <!-- Main modal layout -->
       <div class="modal-body">
         <!-- Visual display column -->
         <div class="modal-visual-col">
@@ -37,7 +37,7 @@ import { projects } from '../data/projects';
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               </svg>
-              <span>Open JPG full size</span>
+              <span>Otvori JPG u punoj veličini</span>
             </a>
           </div>
         </div>
@@ -46,23 +46,23 @@ import { projects } from '../data/projects';
         <div class="modal-info-col">
           <div class="modal-info-content">
             <div class="modal-meta-top">
-              <span id="modal-location" class="mono-label">BELGRADE</span>
+              <span id="modal-location" class="mono-label">BEOGRAD</span>
               <span class="meta-separator">•</span>
               <span id="modal-year" class="mono-label">2026</span>
               <span class="meta-separator">•</span>
               <span id="modal-area" class="mono-label">185 M²</span>
             </div>
 
-            <h3 id="modal-title" class="modal-title">Project Title</h3>
-            <p id="modal-subtitle" class="modal-subtitle">Project Subtitle</p>
+            <h3 id="modal-title" class="modal-title">Naziv projekta</h3>
+            <p id="modal-subtitle" class="modal-subtitle">Podnaslov</p>
 
             <p id="modal-description" class="modal-description">
-              Project description...
+              Opis projekta...
             </p>
 
             <!-- Specifications table -->
             <div class="modal-specs-group">
-              <span class="specs-heading mono-label">SPECIFICATIONS</span>
+              <span class="specs-heading mono-label">TEHNIČKE SPECIFIKACIJE</span>
               <div id="modal-specs-list" class="modal-specs-list">
                 <!-- Injected via JavaScript -->
               </div>
@@ -70,7 +70,7 @@ import { projects } from '../data/projects';
 
             <!-- Software list tags -->
             <div class="modal-software-group">
-              <span class="specs-heading mono-label">TOOLS & VERSIONS</span>
+              <span class="specs-heading mono-label">KORIŠĆENI ALATI</span>
               <div id="modal-software-tags" class="software-tags-row">
                 <!-- Injected via JavaScript -->
               </div>
@@ -83,7 +83,7 @@ import { projects } from '../data/projects';
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
               </svg>
-              <span id="modal-download-label">Download Design File</span>
+              <span id="modal-download-label">Preuzmi izvorni dizajn fajl</span>
             </a>
 
             <div class="file-size-pill">
@@ -100,7 +100,7 @@ import { projects } from '../data/projects';
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
-          <span>Previous</span>
+          <span>Prethodni</span>
           <span class="kbd-key">←</span>
         </button>
 
@@ -108,7 +108,7 @@ import { projects } from '../data/projects';
 
         <button id="modal-next-btn" class="nav-control-btn">
           <span class="kbd-key">→</span>
-          <span>Next</span>
+          <span>Sledeći</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
