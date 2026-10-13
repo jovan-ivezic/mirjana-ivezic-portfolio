@@ -1,0 +1,513 @@
+---
+import { projects } from '../data/projects';
+---
+
+<div id="project-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+
+  <div class="modal-container">
+    <div class="modal-card">
+      <!-- Top header bar -->
+      <div class="modal-topbar">
+        <div class="modal-category-badge" id="modal-badge">
+          <span class="badge-dot"></span>
+          <span id="modal-category-text">3DS MAX</span>
+        </div>
+
+        <div class="modal-controls">
+          <div class="keyboard-hints">
+            <span class="kbd-key">ESC</span> to close
+          </div>
+          <button id="modal-close-btn" class="modal-icon-btn" aria-label="Close dialog">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main modal layout: Image preview + Project specs sheet -->
+      <div class="modal-body">
+        <!-- Visual display column -->
+        <div class="modal-visual-col">
+          <div class="modal-image-wrapper">
+            <img id="modal-image" src="" alt="" class="modal-preview-img" />
+            
+            <a id="modal-view-full-jpg" href="" target="_blank" rel="noopener noreferrer" class="view-full-jpg-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              </svg>
+              <span>Open JPG full size</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project metadata and download panel -->
+        <div class="modal-info-col">
+          <div class="modal-info-content">
+            <div class="modal-meta-top">
+              <span id="modal-location" class="mono-label">BELGRADE</span>
+              <span class="meta-separator">•</span>
+              <span id="modal-year" class="mono-label">2026</span>
+              <span class="meta-separator">•</span>
+              <span id="modal-area" class="mono-label">185 M²</span>
+            </div>
+
+            <h3 id="modal-title" class="modal-title">Project Title</h3>
+            <p id="modal-subtitle" class="modal-subtitle">Project Subtitle</p>
+
+            <p id="modal-description" class="modal-description">
+              Project description...
+            </p>
+
+            <!-- Specifications table -->
+            <div class="modal-specs-group">
+              <span class="specs-heading mono-label">SPECIFICATIONS</span>
+              <div id="modal-specs-list" class="modal-specs-list">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Software list tags -->
+            <div class="modal-software-group">
+              <span class="specs-heading mono-label">TOOLS & VERSIONS</span>
+              <div id="modal-software-tags" class="software-tags-row">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar: Download original file -->
+          <div class="modal-download-bar">
+            <a id="modal-download-btn" href="" download="" class="btn btn-primary download-primary-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              <span id="modal-download-label">Download Design File</span>
+            </a>
+
+            <div class="file-size-pill">
+              <span class="file-format-tag" id="modal-format-tag">.MAX</span>
+              <span class="file-size-text" id="modal-size-text">284 MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation footer: Previous / Next -->
+      <div class="modal-nav-footer">
+        <button id="modal-prev-btn" class="nav-control-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Previous</span>
+          <span class="kbd-key">←</span>
+        </button>
+
+        <span class="modal-counter mono-label" id="modal-counter">1 / 6</span>
+
+        <button id="modal-next-btn" class="nav-control-btn">
+          <span class="kbd-key">→</span>
+          <span>Next</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ projects }}>
+  window.__PORTFOLIO_PROJECTS__ = projects;
+</script>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth);
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-modal-backdrop);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 1080px;
+    max-height: calc(100vh - 48px);
+    display: flex;
+    z-index: 2;
+  }
+
+  .modal-card {
+    width: 100%;
+    background: var(--bg-modal-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: calc(100vh - 48px);
+    color: var(--text-primary);
+  }
+
+  .modal-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+  }
+
+  .modal-category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .badge-3ds {
+    background: var(--tag-3ds-bg);
+    border: 1px solid rgba(242, 153, 74, 0.35);
+    color: var(--tag-3ds);
+  }
+
+  .badge-cad {
+    background: var(--tag-cad-bg);
+    border: 1px solid rgba(77, 156, 255, 0.35);
+    color: var(--tag-cad);
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .modal-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .keyboard-hints {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .kbd-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    color: var(--text-secondary);
+  }
+
+  .modal-icon-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    transition: all var(--transition-fast);
+  }
+
+  .modal-icon-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+  }
+
+  .modal-body {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .modal-visual-col {
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    position: relative;
+  }
+
+  .modal-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .modal-preview-img {
+    width: 100%;
+    height: 100%;
+    max-height: 460px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .view-full-jpg-link {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-modal-surface);
+    border: 1px solid var(--border-medium);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--text-primary);
+    backdrop-filter: blur(8px);
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .view-full-jpg-link:hover {
+    border-color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+
+  .modal-info-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg-modal-surface);
+  }
+
+  .modal-info-content {
+    padding: 24px 28px;
+    overflow-y: auto;
+  }
+
+  .modal-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .meta-separator {
+    color: var(--text-tertiary);
+    font-size: 11px;
+  }
+
+  .modal-title {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+
+  .modal-subtitle {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .modal-description {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .specs-heading {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 10.5px;
+  }
+
+  .modal-specs-group {
+    margin-bottom: 18px;
+  }
+
+  .modal-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+  }
+
+  :global(.modal-spec-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  :global(.modal-spec-row:last-child) {
+    border-bottom: none;
+  }
+
+  :global(.spec-row-label) {
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  :global(.spec-row-val) {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .software-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  :global(.modal-tag-pill) {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .modal-download-bar {
+    padding: 16px 28px;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .download-primary-btn {
+    flex: 1;
+    padding: 10px 16px;
+  }
+
+  .file-size-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .file-format-tag {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .file-size-text {
+    color: var(--text-tertiary);
+  }
+
+  .modal-nav-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+  }
+
+  .nav-control-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .nav-control-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .modal-counter {
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 860px) {
+    .modal-body {
+      grid-template-columns: 1fr;
+    }
+    .modal-visual-col {
+      border-right: none;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px;
+    }
+    .modal-info-content {
+      padding: 16px 20px;
+    }
+    .modal-download-bar {
+      padding: 14px 20px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

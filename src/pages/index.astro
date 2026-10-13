@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Portfolio from '../components/Portfolio.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <title>Mirjana Ivezić | Interior Design & 3D Visualization</title>
+    <meta name="description" content="Portfolio of Mirjana Ivezić — Interior Designer and 3D Visualizer specializing in 3ds Max + Corona rendering and AutoCAD technical architectural documentation." />
+    
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mirjana Ivezić | Interior Design & 3D Visualization" />
+    <meta property="og:description" content="3ds Max + Corona rendering and AutoCAD construction packages." />
+    <meta property="og:image" content="/images/mirjana-ivezic.jpg" />
+    
+    <!-- Google Fonts Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <script is:inline>
+      (function() {
+        // Automatically detect theme based on time of day:
+        // 07:00 to 19:00 -> Light theme (daylight)
+        // 19:00 to 07:00 -> Dark theme (evening/night)
+        const hour = new Date().getHours();
+        const theme = (hour >= 7 && hour < 19) ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="site-content">
+      <Navbar />
+      <main>
+        <Hero />
+        <Portfolio />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

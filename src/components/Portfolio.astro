@@ -1,0 +1,562 @@
+---
+import { projects } from '../data/projects';
+import ProjectModal from './ProjectModal.astro';
+
+const count3ds = projects.filter(p => p.category === '3dsmax').length;
+const countCad = projects.filter(p => p.category === 'autocad').length;
+const countAll = projects.length;
+---
+
+<section id="portfolio" class="portfolio-section">
+  <div class="container">
+    <div class="portfolio-header">
+      <div class="header-text-group">
+        <div class="section-badge">
+          <span>02 / SELECTED WORK & ARCHIVES</span>
+        </div>
+        <h2 class="section-heading">Featured Design Works</h2>
+        <p class="section-description">
+          Filter between 3D photorealistic visualization projects and AutoCAD technical construction packages. Click any project to inspect high-resolution imagery and download native project files (.MAX and .DWG).
+        </p>
+      </div>
+
+      <!-- Linear style filter tabs -->
+      <div class="filter-wrapper">
+        <div class="filter-tabs" role="tablist" aria-label="Project Categories">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+            <span>All Works</span>
+            <span class="filter-count">{countAll}</span>
+          </button>
+          <button class="filter-tab" data-filter="3dsmax" role="tab" aria-selected="false">
+            <span class="filter-indicator ind-3ds"></span>
+            <span>3ds Max</span>
+            <span class="filter-count">{count3ds}</span>
+          </button>
+          <button class="filter-tab" data-filter="autocad" role="tab" aria-selected="false">
+            <span class="filter-indicator ind-cad"></span>
+            <span>AutoCAD</span>
+            <span class="filter-count">{countCad}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Grid -->
+    <div class="project-grid" id="project-grid">
+      {projects.map((project, index) => (
+        <article 
+          class="project-card" 
+          data-category={project.category} 
+          data-project-id={project.id}
+          data-project-index={index}
+          tabindex="0"
+          role="button"
+          aria-label={`View details for ${project.title}`}
+        >
+          <div class="card-media-wrapper">
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              class="card-img" 
+              loading="lazy"
+            />
+            <div class="card-overlay">
+              <span class="inspect-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                </svg>
+                <span>Inspect JPG & Download File</span>
+              </span>
+            </div>
+
+            <div class="card-badges">
+              <span class={`category-tag ${project.category === '3dsmax' ? 'tag-3ds' : 'tag-cad'}`}>
+                {project.categoryLabel}
+              </span>
+              <span class="file-tag">
+                {project.fileFormat} • {project.fileSize}
+              </span>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="card-meta-row">
+              <span class="card-location mono-label">{project.location}</span>
+              <span class="card-area mono-label">{project.area}</span>
+            </div>
+
+            <h3 class="card-title">{project.title}</h3>
+            <p class="card-subtitle">{project.subtitle}</p>
+
+            <div class="card-footer-row">
+              <div class="software-pills">
+                {project.software.slice(0, 2).map((sw) => (
+                  <span class="sw-pill">{sw}</span>
+                ))}
+              </div>
+
+              <div class="download-hint">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+                <span>{project.fileFormat}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <!-- Reusable Interactive Modal -->
+  <ProjectModal />
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. FILTERING LOGIC
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+    const projectCards = document.querySelectorAll<HTMLElement>('.project-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+            card.style.display = 'flex';
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 10);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(8px)';
+            setTimeout(() => {
+              card.style.display = 'none';
+            }, 180);
+          }
+        });
+      });
+    });
+
+    // 2. MODAL LOGIC
+    const modalOverlay = document.getElementById('project-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalPrevBtn = document.getElementById('modal-prev-btn');
+    const modalNextBtn = document.getElementById('modal-next-btn');
+
+    const modalImage = document.getElementById('modal-image') as HTMLImageElement;
+    const modalViewFullJpg = document.getElementById('modal-view-full-jpg') as HTMLAnchorElement;
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalDescription = document.getElementById('modal-description');
+    const modalCategoryText = document.getElementById('modal-category-text');
+    const modalBadge = document.getElementById('modal-badge');
+    const modalLocation = document.getElementById('modal-location');
+    const modalYear = document.getElementById('modal-year');
+    const modalArea = document.getElementById('modal-area');
+    const modalSpecsList = document.getElementById('modal-specs-list');
+    const modalSoftwareTags = document.getElementById('modal-software-tags');
+    const modalDownloadBtn = document.getElementById('modal-download-btn') as HTMLAnchorElement;
+    const modalDownloadLabel = document.getElementById('modal-download-label');
+    const modalFormatTag = document.getElementById('modal-format-tag');
+    const modalSizeText = document.getElementById('modal-size-text');
+    const modalCounter = document.getElementById('modal-counter');
+
+    // Projects array from global window
+    const projectsList = (window as any).__PORTFOLIO_PROJECTS__ || [];
+    let currentProjectIndex = 0;
+
+    function openModalWithIndex(index: number) {
+      if (!projectsList || projectsList.length === 0) return;
+      if (index < 0) index = projectsList.length - 1;
+      if (index >= projectsList.length) index = 0;
+
+      currentProjectIndex = index;
+      const proj = projectsList[index];
+
+      if (modalImage) {
+        modalImage.src = proj.image;
+        modalImage.alt = proj.title;
+      }
+      if (modalViewFullJpg) {
+        modalViewFullJpg.href = proj.image;
+      }
+      if (modalTitle) modalTitle.textContent = proj.title;
+      if (modalSubtitle) modalSubtitle.textContent = proj.subtitle;
+      if (modalDescription) modalDescription.textContent = proj.description;
+      if (modalLocation) modalLocation.textContent = proj.location.toUpperCase();
+      if (modalYear) modalYear.textContent = proj.year;
+      if (modalArea) modalArea.textContent = proj.area;
+
+      if (modalBadge && modalCategoryText) {
+        modalCategoryText.textContent = proj.category === '3dsmax' ? '3DS MAX • CGI' : 'AUTOCAD • TECHNICAL';
+        modalBadge.className = `modal-category-badge ${proj.category === '3dsmax' ? 'badge-3ds' : 'badge-cad'}`;
+      }
+
+      if (modalDownloadBtn && modalDownloadLabel && modalFormatTag && modalSizeText) {
+        modalDownloadBtn.href = proj.downloadFile;
+        modalDownloadBtn.download = proj.downloadFileName;
+        modalDownloadLabel.textContent = `Download Native Design File (${proj.fileFormat})`;
+        modalFormatTag.textContent = proj.fileFormat;
+        modalSizeText.textContent = proj.fileSize;
+      }
+
+      if (modalCounter) {
+        modalCounter.textContent = `${index + 1} / ${projectsList.length}`;
+      }
+
+      // Inject specifications
+      if (modalSpecsList) {
+        modalSpecsList.innerHTML = '';
+        if (proj.specifications) {
+          proj.specifications.forEach((spec: any) => {
+            const row = document.createElement('div');
+            row.className = 'modal-spec-row';
+            row.innerHTML = `
+              <span class="spec-row-label">${spec.label}</span>
+              <span class="spec-row-val">${spec.value}</span>
+            `;
+            modalSpecsList.appendChild(row);
+          });
+        }
+      }
+
+      // Inject software tags
+      if (modalSoftwareTags) {
+        modalSoftwareTags.innerHTML = '';
+        if (proj.software) {
+          proj.software.forEach((sw: string) => {
+            const pill = document.createElement('span');
+            pill.className = 'modal-tag-pill';
+            pill.textContent = sw;
+            modalSoftwareTags.appendChild(pill);
+          });
+        }
+      }
+
+      // Open overlay
+      if (modalOverlay) {
+        modalOverlay.classList.add('active');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+    }
+
+    function closeModal() {
+      if (modalOverlay) {
+        modalOverlay.classList.remove('active');
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+    }
+
+    // Attach card clicks
+    projectCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const indexStr = card.getAttribute('data-project-index');
+        const idx = indexStr ? parseInt(indexStr, 10) : 0;
+        openModalWithIndex(idx);
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const indexStr = card.getAttribute('data-project-index');
+          const idx = indexStr ? parseInt(indexStr, 10) : 0;
+          openModalWithIndex(idx);
+        }
+      });
+    });
+
+    // Close handlers
+    modalCloseBtn?.addEventListener('click', closeModal);
+    modalBackdrop?.addEventListener('click', closeModal);
+
+    modalPrevBtn?.addEventListener('click', () => {
+      openModalWithIndex(currentProjectIndex - 1);
+    });
+
+    modalNextBtn?.addEventListener('click', () => {
+      openModalWithIndex(currentProjectIndex + 1);
+    });
+
+    // Keyboard handlers
+    window.addEventListener('keydown', (e) => {
+      if (!modalOverlay?.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowLeft') {
+        openModalWithIndex(currentProjectIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        openModalWithIndex(currentProjectIndex + 1);
+      }
+    });
+  });
+</script>
+
+<style>
+  .portfolio-section {
+    padding-top: 80px;
+    padding-bottom: 100px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .portfolio-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .header-text-group {
+    max-width: 650px;
+  }
+
+  .filter-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .ind-3ds {
+    background: #f5c082;
+    box-shadow: 0 0 6px rgba(245, 192, 130, 0.6);
+  }
+
+  .ind-cad {
+    background: #8fbff7;
+    box-shadow: 0 0 6px rgba(143, 191, 247, 0.6);
+  }
+
+  /* Grid Layout */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth), opacity var(--transition-fast);
+    outline: none;
+  }
+
+  .project-card:hover, .project-card:focus-visible {
+    border-color: var(--border-medium);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    background: var(--bg-card-hover);
+  }
+
+  .card-media-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9.5;
+    background: #090a0c;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-card:hover .card-img {
+    transform: scale(1.04);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 9, 10, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .project-card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .inspect-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(8, 9, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+    transform: translateY(4px);
+    transition: transform var(--transition-fast);
+  }
+
+  .project-card:hover .inspect-pill {
+    transform: translateY(0);
+  }
+
+  .card-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .category-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+  }
+
+  .tag-3ds {
+    background: rgba(15, 16, 18, 0.85);
+    border: 1px solid rgba(242, 153, 74, 0.4);
+    color: #f5c082;
+  }
+
+  .tag-cad {
+    background: rgba(15, 16, 18, 0.85);
+    border: 1px solid rgba(77, 156, 255, 0.4);
+    color: #8fbff7;
+  }
+
+  .file-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(15, 16, 18, 0.85);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    backdrop-filter: blur(8px);
+  }
+
+  .card-content {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .card-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .card-location {
+    font-size: 10px;
+    color: var(--text-tertiary);
+  }
+
+  .card-area {
+    font-size: 10px;
+    color: var(--text-secondary);
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .card-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .card-footer-row {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .software-pills {
+    display: flex;
+    gap: 6px;
+  }
+
+  .sw-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 3px;
+    color: var(--text-tertiary);
+  }
+
+  .download-hint {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .project-card:hover .download-hint {
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+    .portfolio-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

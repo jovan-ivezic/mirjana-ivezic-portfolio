@@ -1,0 +1,99 @@
+---
+---
+<footer class="footer-wrapper">
+  <div class="container footer-inner">
+    <div class="footer-left">
+      <span class="copyright">© 2026 MIRJANA IVEZIĆ • Interior Architecture & 3D Visualization</span>
+      <span class="footer-note mono-label">Belgrade, Serbia • 3ds Max scenes & AutoCAD .DWG documentation.</span>
+    </div>
+
+    <div class="footer-right">
+      <a href="#portfolio" class="footer-link">Portfolio</a>
+      <span class="sep">•</span>
+      <a href="/downloads/mirjana-ivezic-cv.pdf" download="mirjana-ivezic-cv.pdf" class="footer-link">Resume (.PDF)</a>
+      <span class="sep">•</span>
+      <button id="scroll-to-top" class="footer-link top-btn" aria-label="Scroll to top">
+        <span>Back to top</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 15l-6-6-6 6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('scroll-to-top')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+<style>
+  .footer-wrapper {
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    padding: 32px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .copyright {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer-link {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--text-primary);
+  }
+
+  .sep {
+    color: var(--text-tertiary);
+    font-size: 11px;
+  }
+
+  .top-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 680px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

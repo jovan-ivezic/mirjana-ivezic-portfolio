@@ -1,0 +1,104 @@
+---
+---
+<header class="navbar-wrapper">
+  <div class="container navbar-inner">
+    <a href="#" class="navbar-brand">
+      <div class="brand-text">
+        <span class="brand-name">MIRJANA IVEZIĆ</span>
+        <span class="brand-sub">INTERIOR DESIGN & 3D CGI</span>
+      </div>
+    </a>
+
+    <div class="navbar-right">
+      <nav class="navbar-nav">
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <a href="#contact" class="btn btn-primary nav-cta">Get in Touch</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .navbar-wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: var(--bg-page);
+    opacity: 0.96;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .brand-name {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+  }
+
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-cta {
+    padding: 7px 15px;
+    font-size: 12.5px;
+  }
+
+  @media (max-width: 680px) {
+    .navbar-nav {
+      display: none;
+    }
+  }
+</style>

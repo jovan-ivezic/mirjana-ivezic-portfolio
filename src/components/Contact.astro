@@ -1,0 +1,305 @@
+---
+---
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Direct Contact Details -->
+      <div class="contact-info-col">
+        <div class="section-badge">
+          <span>Contact</span>
+        </div>
+
+        <h2 class="section-heading">Let's discuss your space or position.</h2>
+        <p class="section-description">
+          Available for studio roles, freelance 3ds Max visualization, and AutoCAD technical packages.
+        </p>
+
+        <div class="contact-meta-cards">
+          <a href="mailto:mirjana.ivezic.design@gmail.com" class="meta-card">
+            <div class="meta-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="meta-card-text">
+              <span class="mono-label">DIRECT EMAIL</span>
+              <span class="meta-val">mirjana.ivezic.design@gmail.com</span>
+            </div>
+          </a>
+
+          <div class="meta-card">
+            <div class="meta-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                <path d="M2 12h20"/>
+              </svg>
+            </div>
+            <div class="meta-card-text">
+              <span class="mono-label">LOCATION</span>
+              <span class="meta-val">Belgrade, Serbia • Remote Worldwide</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links-row">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+          <span class="social-sep">•</span>
+          <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-link">Behance</a>
+          <span class="social-sep">•</span>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Linear-style Clean Contact Form -->
+      <div class="contact-form-col">
+        <form id="contact-form" class="contact-form">
+          <div class="form-header">
+            <span class="form-title">Send a Message</span>
+            <span class="form-hint mono-label">REPLY WITHIN 24H</span>
+          </div>
+
+          <div class="input-group">
+            <label for="contact-name" class="input-label">Your Name</label>
+            <input 
+              type="text" 
+              id="contact-name" 
+              name="name" 
+              class="input-field" 
+              placeholder="e.g. Elena or Studio Name" 
+              required 
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="contact-email" class="input-label">Email Address</label>
+            <input 
+              type="email" 
+              id="contact-email" 
+              name="email" 
+              class="input-field" 
+              placeholder="name@company.com" 
+              required 
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="contact-type" class="input-label">Inquiry</label>
+            <select id="contact-type" name="type" class="input-field select-field">
+              <option value="employment">Job Opportunity / Studio Role</option>
+              <option value="3dsmax">3ds Max 3D Render Project</option>
+              <option value="autocad">AutoCAD Drafting & Detailing</option>
+              <option value="other">General Design Inquiry</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="contact-message" class="input-label">Message</label>
+            <textarea 
+              id="contact-message" 
+              name="message" 
+              class="textarea-field" 
+              placeholder="Briefly describe your project or proposal..." 
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" id="contact-submit-btn" class="btn btn-primary form-submit-btn">
+            <span id="submit-text">Send Message</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <div id="form-success-toast" class="form-toast" style="display: none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Thank you! Your message has been sent successfully.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement;
+    const submitText = document.getElementById('submit-text');
+    const toast = document.getElementById('form-success-toast');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!submitBtn || !submitText || !toast) return;
+
+      submitBtn.disabled = true;
+      submitText.textContent = 'Sending...';
+
+      setTimeout(() => {
+        submitText.textContent = 'Message Sent';
+        toast.style.display = 'flex';
+        form.reset();
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitText.textContent = 'Send Message';
+        }, 3000);
+      }, 500);
+    });
+  });
+</script>
+
+<style>
+  .contact-section {
+    padding-top: 70px;
+    padding-bottom: 90px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(32px, 5vw, 60px);
+    align-items: start;
+  }
+
+  .contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-meta-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .meta-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-fast);
+  }
+
+  .meta-card:hover {
+    border-color: var(--border-medium);
+    transform: translateY(-1px);
+  }
+
+  .meta-card-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  .meta-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-val {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .social-links-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .social-link {
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .social-link:hover {
+    color: var(--text-primary);
+  }
+
+  .social-sep {
+    color: var(--text-tertiary);
+    font-size: 11px;
+  }
+
+  .contact-form-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 3.5vw, 36px);
+    box-shadow: var(--card-shadow);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .form-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .form-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .form-hint {
+    color: var(--text-tertiary);
+  }
+
+  .select-field {
+    cursor: pointer;
+  }
+
+  .form-submit-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+  }
+
+  .form-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    font-size: 13px;
+    color: #10b981;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 820px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
