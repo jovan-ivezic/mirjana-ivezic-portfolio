@@ -1,0 +1,24 @@
+# Mirjana Ivezić — Sertifikovani dizajner enterijera
+
+> Portfolio i profesionalne usluge dizajna enterijera, fotorealistične 3D vizuelizacije i arhitektonske tehničke dokumentacije.
+
+## O dizajneru
+- Ime: Mirjana Ivezić
+- Zvanje: Sertifikovani dizajner enterijera
+- Lokacija: Novi Sad, Srbija (dostupna za projekte u Novom Sadu, Beogradu, širom Srbije i remote međunarodnu saradnju)
+- Web sajt: https://mirjanaivezic.vercel.app/
+- Kontakt email: ivezicm21@gmail.com
+- LinkedIn profil: https://www.linkedin.com/in/mirjana-ivezi%C4%87-a28759a5
+
+## Osnovne usluge
+- Dizajn enterijera: Idejna rešenja, koncepcija prostora, selekcija fizikalnih materijala, paleta boja i rasvete za stambene i poslovne prostore.
+- 3D vizuelizacija: Fotorealistični 3D renderi visoke rezolucije izrađeni u 3ds Max + Corona Renderer sa fizikalnim kamerama, realističnim osvetljenjem (Sun & Sky) i postprodukcijom.
+- Tehnička 2D dokumentacija: Arhitektonski crteži osnova, dispozicija nameštaja, kotiranje prostorija i izvođački planovi u AutoCAD-u.
+- Nameštaj po meri: Projektovanje funkcionalnih kuhinja, radnih soba i modularnih plakara sa preciznim stolarskim detaljima.
+
+## Prikazani portfolio radovi
+1. Garsonjera do 40 m² (Novi Sad, Srbija) — 38 m²: Fotorealistična 3D vizuelizacija kompaktnog prostora otvorenog koncepta sa integrisanom trpezarijom i zonom za odmor.
+2. Minimalistička kuhinja sa trpezarijom (Novi Sad, Srbija) — 18 m²: 3D modelovanje moderne kuhinje sa skrivenom LED rasvetom i frontovima bez ručica.
+3. Home Office (Novi Sad, Srbija) — 24 m²: Multifunkcionalni enterijer za rad, radni sto po meri i akustične zidne lamele.
+4. Glavna arhitektonska osnova kuće (Novi Sad, Srbija) — 100 m²: AutoCAD 2D tehnički nacrt i dispozicija nameštaja porodične kuće.
+

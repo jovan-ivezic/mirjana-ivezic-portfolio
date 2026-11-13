@@ -8,24 +8,107 @@ import Footer from '../components/Footer.astro';
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="sr" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     
-    <title>Mirjana Ivezić | Dizajn enterijera & 3D vizuelizacija</title>
-    <meta name="description" content="Portfolio Mirjane Ivezić — Dizajner enterijera i 3D vizuelizacija, specijalizovana za 3ds Max + Corona fotorealistične rendere i AutoCAD izvođačku dokumentaciju." />
+    <title>Mirjana Ivezić | Sertifikovani dizajner enterijera & 3D vizuelizacija Novi Sad</title>
+    <meta name="description" content="Mirjana Ivezić — Sertifikovani dizajner enterijera. Idejna rešenja enterijera, fotorealistična 3D vizuelizacija prostora (3ds Max & Corona) i AutoCAD tehnička dokumentacija. Novi Sad, Beograd i remote." />
+    <meta name="keywords" content="dizajn enterijera Novi Sad, sertifikovani dizajner enterijera, 3D vizuelizacija, uredjenje stana, Corona Renderer, 3ds Max enterijer, AutoCAD osnova kuce, dizajn kuhinje po meri, arhitektonski nacrti" />
+    <meta name="author" content="Mirjana Ivezić" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="https://mirjanaivezic.vercel.app/" />
+    <meta name="google-site-verification" content="k4pzdX6P_uCTBfnUFxk03y1MuDtot-fJQpI0oJxLpwM" />
     
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sr_RS" />
+    <meta property="og:site_name" content="Mirjana Ivezić Enterijer" />
     <meta property="og:url" content="https://mirjanaivezic.vercel.app/" />
-    <meta property="og:title" content="Mirjana Ivezić | Dizajn enterijera & 3D vizuelizacija" />
-    <meta property="og:description" content="3ds Max + Corona fotorealistični renderi i AutoCAD tehnička dokumentacija." />
-    <meta property="og:image" content="/images/mirjana-ivezic.jpg" />
+    <meta property="og:title" content="Mirjana Ivezić | Sertifikovani dizajner enterijera & 3D vizuelizacija" />
+    <meta property="og:description" content="Idejna rešenja enterijera, fotorealistična 3D vizuelizacija prostora i AutoCAD tehnička dokumentacija. Novi Sad, Beograd i remote." />
+    <meta property="og:image" content="https://mirjanaivezic.vercel.app/images/mirjana-ivezic.jpg" />
+    <meta property="og:image:alt" content="Mirjana Ivezić - Sertifikovani dizajner enterijera" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mirjana Ivezić | Sertifikovani dizajner enterijera" />
+    <meta name="twitter:description" content="Idejna rešenja enterijera, fotorealistična 3D vizuelizacija prostora i AutoCAD tehnička dokumentacija." />
+    <meta name="twitter:image" content="https://mirjanaivezic.vercel.app/images/mirjana-ivezic.jpg" />
+
+    <!-- JSON-LD Structured Data for AEO / GEO / Search Engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": ["Person", "ProfessionalService"],
+            "@id": "https://mirjanaivezic.vercel.app/#person",
+            "name": "Mirjana Ivezić",
+            "jobTitle": "Sertifikovani dizajner enterijera",
+            "description": "Sertifikovani dizajner enterijera specijalizovana za idejna rešenja enterijera, fotorealističnu 3D vizuelizaciju (3ds Max & Corona Renderer) i AutoCAD izvođačku tehničku dokumentaciju.",
+            "url": "https://mirjanaivezic.vercel.app/",
+            "image": "https://mirjanaivezic.vercel.app/images/mirjana-ivezic.jpg",
+            "email": "ivezicm21@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Novi Sad",
+              "addressCountry": "RS"
+            },
+            "areaServed": [
+              { "@type": "City", "name": "Novi Sad" },
+              { "@type": "City", "name": "Beograd" },
+              { "@type": "Country", "name": "Srbija" }
+            ],
+            "sameAs": [
+              "https://www.linkedin.com/in/mirjana-ivezi%C4%87-a28759a5"
+            ],
+            "knowsAbout": [
+              "Dizajn enterijera",
+              "3D vizuelizacija",
+              "Prostorno planiranje",
+              "AutoCAD arhitektonski nacrti",
+              "Corona Renderer",
+              "3ds Max",
+              "Projektovanje kuhinja i nameštaja po meri"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Usluge dizajna enterijera",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Idejni dizajn i planiranje enterijera",
+                    "description": "Prostorna organizacija, koncept rešenja i izbor materijala za stambene i poslovne prostore."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Fotorealistična 3D vizuelizacija",
+                    "description": "Kompjuterski renderi visoke definicije sa fizikalnim svetlom i teksturom materijala u 3ds Max + Corona Renderer-u."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "AutoCAD 2D tehnička dokumentacija",
+                    "description": "Arhitektonske osnove, dispozicija nameštaja, kotiranje i detaljni planovi za izvođače."
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    </script>
     
     <!-- Google Fonts Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
