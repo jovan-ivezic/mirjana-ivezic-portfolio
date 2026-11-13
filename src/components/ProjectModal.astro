@@ -198,6 +198,8 @@ import { projects } from '../data/projects';
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition-smooth);
+    overflow: hidden;
+    max-width: 100vw;
   }
 
   .modal-overlay.active {
@@ -220,10 +222,14 @@ import { projects } from '../data/projects';
     max-height: calc(100vh - 40px);
     display: flex;
     z-index: 2;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .modal-card {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     background: var(--bg-modal-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
@@ -242,6 +248,9 @@ import { projects } from '../data/projects';
     padding: 12px 20px;
     border-bottom: 1px solid var(--border-subtle);
     background: var(--bg-surface);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .modal-category-badge {
@@ -331,7 +340,11 @@ import { projects } from '../data/projects';
     grid-template-columns: 1.3fr 1fr;
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     min-height: 0;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Gallery visual column */
@@ -342,11 +355,17 @@ import { projects } from '../data/projects';
     flex-direction: column;
     padding: 20px;
     gap: 14px;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .modal-image-wrapper {
     position: relative;
     width: 100%;
+    max-width: 100%;
     aspect-ratio: 16 / 10;
     display: flex;
     align-items: center;
@@ -356,11 +375,13 @@ import { projects } from '../data/projects';
     background: #000;
     border: 1px solid var(--border-subtle);
     cursor: zoom-in;
+    min-width: 0;
   }
 
   .modal-preview-img {
     width: 100%;
     height: 100%;
+    max-width: 100%;
     object-fit: contain;
     display: block;
     transition: opacity 180ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -450,11 +471,17 @@ import { projects } from '../data/projects';
 
   /* Thumbnails strip */
   .modal-thumbnails-strip {
+    position: relative;
     display: flex;
     gap: 8px;
     overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding-bottom: 4px;
     scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
   }
 
   :global(.thumb-btn) {
@@ -494,11 +521,18 @@ import { projects } from '../data/projects';
     flex-direction: column;
     justify-content: space-between;
     background: var(--bg-modal-surface);
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .modal-info-content {
     padding: 24px 28px;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .modal-meta-top {
@@ -520,12 +554,14 @@ import { projects } from '../data/projects';
     color: var(--text-primary);
     margin-bottom: 4px;
     line-height: 1.25;
+    word-break: break-word;
   }
 
   .modal-subtitle {
     font-size: 13.5px;
     color: var(--text-secondary);
     margin-bottom: 16px;
+    word-break: break-word;
   }
 
   .modal-description {
@@ -533,6 +569,7 @@ import { projects } from '../data/projects';
     line-height: 1.6;
     color: var(--text-secondary);
     margin-bottom: 20px;
+    word-break: break-word;
   }
 
   .specs-heading {
@@ -604,6 +641,9 @@ import { projects } from '../data/projects';
     display: flex;
     align-items: center;
     gap: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
   }
 
   .action-btn {
@@ -627,6 +667,9 @@ import { projects } from '../data/projects';
     padding: 10px 20px;
     border-top: 1px solid var(--border-subtle);
     background: var(--bg-surface);
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
   }
 
   .nav-control-btn {
@@ -776,15 +819,26 @@ import { projects } from '../data/projects';
 
   @media (max-width: 920px) {
     .modal-body {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .modal-visual-col {
       border-right: none;
       border-bottom: 1px solid var(--border-subtle);
       padding: 16px;
+      flex-shrink: 0;
+    }
+    .modal-info-col {
+      flex: 1 0 auto;
+      overflow: visible;
     }
     .modal-info-content {
       padding: 16px 20px;
+      overflow-y: visible;
+      height: auto;
+      max-height: none;
     }
     .modal-action-bar {
       padding: 14px 20px;
@@ -796,10 +850,127 @@ import { projects } from '../data/projects';
     .keyboard-hints {
       display: none;
     }
+  }
+
+  @media (max-width: 640px) {
+    .modal-overlay {
+      padding: 8px 6px;
+      overflow: hidden;
+      width: 100vw;
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+    .modal-container {
+      width: calc(100% - 12px);
+      max-width: calc(100% - 12px);
+      max-height: calc(100dvh - 16px);
+      min-width: 0;
+      margin: 0 auto;
+    }
+    .modal-card {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      max-height: calc(100dvh - 16px);
+      border-radius: var(--radius-md);
+    }
+    .modal-topbar {
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+    .modal-visual-col {
+      padding: 12px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .modal-image-wrapper {
+      aspect-ratio: 16 / 11;
+      width: 100%;
+      min-height: 190px;
+      flex-shrink: 0;
+    }
+    .modal-thumbnails-strip {
+      flex-shrink: 0;
+    }
+    :global(.thumb-btn) {
+      flex: 0 0 60px;
+      height: 42px;
+    }
+    .modal-info-content {
+      padding: 16px 14px;
+    }
+    .modal-title {
+      font-size: 18px;
+    }
+    .modal-action-bar {
+      padding: 12px 14px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .modal-nav-footer {
+      padding: 8px 14px;
+      flex-shrink: 0;
+    }
+
+    /* Mobile Lightbox */
+    .lightbox-topbar {
+      padding: 12px 16px;
+    }
+    .lightbox-title {
+      font-size: 13.5px;
+      max-width: 190px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lightbox-stage {
+      position: relative;
+      padding: 0 6px 14px;
+    }
+    .lightbox-img-frame {
+      padding: 0;
+    }
+    .lightbox-img {
+      max-width: 98vw;
+      max-height: 80vh;
+    }
     .lightbox-nav-btn {
-      width: 40px;
-      height: 40px;
-      margin: 0 4px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 42px;
+      height: 42px;
+      margin: 0;
+      background: rgba(10, 11, 13, 0.75);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .lightbox-nav-btn.prev-btn {
+      left: 8px;
+    }
+    .lightbox-nav-btn.next-btn {
+      right: 8px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .modal-overlay {
+      padding: 6px 4px;
+    }
+    .modal-container {
+      width: calc(100% - 8px);
+      max-width: calc(100% - 8px);
+    }
+    .modal-nav-footer {
+      padding: 8px 10px;
+    }
+    .nav-control-btn {
+      font-size: 11px;
+      padding: 4px 6px;
+      gap: 3px;
+    }
+    .modal-counter {
+      font-size: 10.5px;
     }
   }
 </style>

@@ -28,7 +28,7 @@ export const projects: Project[] = [
     year: "2026",
     location: "Novi Sad, Srbija",
     area: "52 m²",
-    software: ["3ds Max 2024", "Corona Renderer"],
+    software: ["3ds Max", "Corona"],
     image: "/images/projects/dnevna-2.webp",
     gallery: [
       "/images/projects/dnevna-2.webp",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     year: "2026",
     location: "Novi Sad, Srbija",
     area: "18 m²",
-    software: ["3ds Max 2024", "Corona Renderer", "AutoCAD"],
+    software: ["3ds Max", "Corona", "AutoCAD"],
     image: "/images/projects/kuhinja-1.webp",
     gallery: [
       "/images/projects/kuhinja-1.webp",
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     year: "2026",
     location: "Novi Sad, Srbija",
     area: "24 m²",
-    software: ["3ds Max 2024", "Corona Renderer"],
+    software: ["3ds Max", "Corona"],
     image: "/images/projects/radna-soba-1.webp",
     gallery: [
       "/images/projects/radna-soba-1.webp",
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     year: "2026",
     location: "Novi Sad, Srbija",
     area: "125 m²",
-    software: ["AutoCAD 2024", "Arhitektonska razrada"],
+    software: ["AutoCAD", "2D Detalji"],
     image: "/images/projects/house-plan.webp",
     gallery: [
       "/images/projects/house-plan.webp"
