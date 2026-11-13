@@ -13,7 +13,7 @@ const countAll = projects.length;
       <div class="header-text-group">
         <h2 class="section-heading">Izabrani projekti</h2>
         <p class="section-description">
-          Filter za 3ds Max 3D rendere i AutoCAD tehničku dokumentaciju. Kliknite na projekat za uvećan JPG prikaz i direktno preuzimanje izvornog dizajn fajla (.MAX ili .DWG).
+          Filter za 3ds Max 3D rendere i AutoCAD tehničku dokumentaciju. Kliknite na projekat za uvećan prikaz, galeriju kadrova i tehničke specifikacije.
         </p>
       </div>
 
@@ -62,7 +62,7 @@ const countAll = projects.length;
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                 </svg>
-                <span>Pregledaj JPG i preuzmi fajl</span>
+                <span>Pogledaj galeriju i detalje</span>
               </span>
             </div>
 
@@ -71,7 +71,7 @@ const countAll = projects.length;
                 {project.categoryLabel}
               </span>
               <span class="file-tag">
-                {project.fileFormat} • {project.fileSize}
+                {project.category === '3dsmax' ? `${project.gallery.length} rendera` : '1 CAD nacrt'}
               </span>
             </div>
           </div>
@@ -92,11 +92,11 @@ const countAll = projects.length;
                 ))}
               </div>
 
-              <div class="download-hint">
+              <div class="view-hint">
+                <span>Pogledaj projekat</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-                <span>Preuzmi {project.fileFormat}</span>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@ const countAll = projects.length;
       });
     });
 
-    // 2. MODAL LOGIC
+    // 2. MODAL & GALLERY LOGIC
     const modalOverlay = document.getElementById('project-modal');
     const modalBackdrop = document.getElementById('modal-backdrop');
     const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -152,7 +152,15 @@ const countAll = projects.length;
     const modalNextBtn = document.getElementById('modal-next-btn');
 
     const modalImage = document.getElementById('modal-image') as HTMLImageElement;
+    const modalGalleryBadge = document.getElementById('modal-gallery-badge');
+    const modalGalleryCounter = document.getElementById('modal-gallery-counter');
+    const modalGalleryPrev = document.getElementById('modal-gallery-prev');
+    const modalGalleryNext = document.getElementById('modal-gallery-next');
+    const modalThumbnails = document.getElementById('modal-thumbnails');
     const modalViewFullJpg = document.getElementById('modal-view-full-jpg') as HTMLAnchorElement;
+    const modalFullresAction = document.getElementById('modal-fullres-action') as HTMLAnchorElement;
+    const modalContactBtn = document.getElementById('modal-contact-btn') as HTMLAnchorElement;
+
     const modalTitle = document.getElementById('modal-title');
     const modalSubtitle = document.getElementById('modal-subtitle');
     const modalDescription = document.getElementById('modal-description');
@@ -163,14 +171,50 @@ const countAll = projects.length;
     const modalArea = document.getElementById('modal-area');
     const modalSpecsList = document.getElementById('modal-specs-list');
     const modalSoftwareTags = document.getElementById('modal-software-tags');
-    const modalDownloadBtn = document.getElementById('modal-download-btn') as HTMLAnchorElement;
-    const modalDownloadLabel = document.getElementById('modal-download-label');
-    const modalFormatTag = document.getElementById('modal-format-tag');
-    const modalSizeText = document.getElementById('modal-size-text');
     const modalCounter = document.getElementById('modal-counter');
 
     const projectsList = (window as any).__PORTFOLIO_PROJECTS__ || [];
     let currentProjectIndex = 0;
+    let currentGalleryIndex = 0;
+
+    function renderGalleryImage(proj: any, gIndex: number) {
+      if (!proj || !proj.gallery || proj.gallery.length === 0) return;
+      if (gIndex < 0) gIndex = proj.gallery.length - 1;
+      if (gIndex >= proj.gallery.length) gIndex = 0;
+
+      currentGalleryIndex = gIndex;
+      const imgSrc = proj.gallery[gIndex];
+
+      if (modalImage) {
+        modalImage.style.opacity = '0.35';
+        modalImage.src = imgSrc;
+        modalImage.alt = `${proj.title} - prikaz ${gIndex + 1}`;
+        setTimeout(() => {
+          modalImage.style.opacity = '1';
+        }, 100);
+      }
+
+      if (modalViewFullJpg) modalViewFullJpg.href = imgSrc;
+      if (modalFullresAction) modalFullresAction.href = imgSrc;
+
+      if (modalGalleryCounter) {
+        modalGalleryCounter.textContent = proj.category === '3dsmax' 
+          ? `Kadar ${gIndex + 1} / ${proj.gallery.length}`
+          : `Nacrt ${gIndex + 1} / ${proj.gallery.length}`;
+      }
+
+      if (modalThumbnails) {
+        const thumbBtns = modalThumbnails.querySelectorAll('.thumb-btn');
+        thumbBtns.forEach((btn, idx) => {
+          if (idx === gIndex) {
+            btn.classList.add('active');
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+    }
 
     function openModalWithIndex(index: number) {
       if (!projectsList || projectsList.length === 0) return;
@@ -178,15 +222,9 @@ const countAll = projects.length;
       if (index >= projectsList.length) index = 0;
 
       currentProjectIndex = index;
+      currentGalleryIndex = 0;
       const proj = projectsList[index];
 
-      if (modalImage) {
-        modalImage.src = proj.image;
-        modalImage.alt = proj.title;
-      }
-      if (modalViewFullJpg) {
-        modalViewFullJpg.href = proj.image;
-      }
       if (modalTitle) modalTitle.textContent = proj.title;
       if (modalSubtitle) modalSubtitle.textContent = proj.subtitle;
       if (modalDescription) modalDescription.textContent = proj.description;
@@ -197,14 +235,6 @@ const countAll = projects.length;
       if (modalBadge && modalCategoryText) {
         modalCategoryText.textContent = proj.category === '3dsmax' ? '3DS MAX • 3D RENDER' : 'AUTOCAD • TEHNIČKI CRTEŽ';
         modalBadge.className = `modal-category-badge ${proj.category === '3dsmax' ? 'badge-3ds' : 'badge-cad'}`;
-      }
-
-      if (modalDownloadBtn && modalDownloadLabel && modalFormatTag && modalSizeText) {
-        modalDownloadBtn.href = proj.downloadFile;
-        modalDownloadBtn.download = proj.downloadFileName;
-        modalDownloadLabel.textContent = `Preuzmi dizajn fajl (${proj.fileFormat})`;
-        modalFormatTag.textContent = proj.fileFormat;
-        modalSizeText.textContent = proj.fileSize;
       }
 
       if (modalCounter) {
@@ -240,6 +270,39 @@ const countAll = projects.length;
         }
       }
 
+      // Build Thumbnails strip
+      if (modalThumbnails) {
+        modalThumbnails.innerHTML = '';
+        const gallery = proj.gallery || [proj.image];
+
+        if (gallery.length > 1) {
+          modalThumbnails.style.display = 'flex';
+          if (modalGalleryBadge) modalGalleryBadge.style.display = 'block';
+          if (modalGalleryPrev) modalGalleryPrev.style.display = 'flex';
+          if (modalGalleryNext) modalGalleryNext.style.display = 'flex';
+
+          gallery.forEach((thumbSrc: string, tIdx: number) => {
+            const btn = document.createElement('button');
+            btn.className = `thumb-btn ${tIdx === 0 ? 'active' : ''}`;
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('aria-label', `Prikaži kadar ${tIdx + 1}`);
+            btn.innerHTML = `<img src="${thumbSrc}" alt="Thumbnail ${tIdx + 1}" class="thumb-img" loading="lazy" />`;
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              renderGalleryImage(proj, tIdx);
+            });
+            modalThumbnails.appendChild(btn);
+          });
+        } else {
+          modalThumbnails.style.display = 'none';
+          if (modalGalleryBadge) modalGalleryBadge.style.display = 'none';
+          if (modalGalleryPrev) modalGalleryPrev.style.display = 'none';
+          if (modalGalleryNext) modalGalleryNext.style.display = 'none';
+        }
+      }
+
+      renderGalleryImage(proj, 0);
+
       if (modalOverlay) {
         modalOverlay.classList.add('active');
         modalOverlay.setAttribute('aria-hidden', 'false');
@@ -254,6 +317,23 @@ const countAll = projects.length;
         document.body.classList.remove('modal-open');
       }
     }
+
+    // Gallery prev/next button handlers
+    modalGalleryPrev?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const proj = projectsList[currentProjectIndex];
+      renderGalleryImage(proj, currentGalleryIndex - 1);
+    });
+
+    modalGalleryNext?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const proj = projectsList[currentProjectIndex];
+      renderGalleryImage(proj, currentGalleryIndex + 1);
+    });
+
+    modalContactBtn?.addEventListener('click', () => {
+      closeModal();
+    });
 
     projectCards.forEach(card => {
       card.addEventListener('click', () => {
@@ -286,12 +366,22 @@ const countAll = projects.length;
     window.addEventListener('keydown', (e) => {
       if (!modalOverlay?.classList.contains('active')) return;
 
+      const proj = projectsList[currentProjectIndex];
+
       if (e.key === 'Escape') {
         closeModal();
       } else if (e.key === 'ArrowLeft') {
-        openModalWithIndex(currentProjectIndex - 1);
+        if (proj && proj.gallery && proj.gallery.length > 1) {
+          renderGalleryImage(proj, currentGalleryIndex - 1);
+        } else {
+          openModalWithIndex(currentProjectIndex - 1);
+        }
       } else if (e.key === 'ArrowRight') {
-        openModalWithIndex(currentProjectIndex + 1);
+        if (proj && proj.gallery && proj.gallery.length > 1) {
+          renderGalleryImage(proj, currentGalleryIndex + 1);
+        } else {
+          openModalWithIndex(currentProjectIndex + 1);
+        }
       }
     });
   });
@@ -322,6 +412,53 @@ const countAll = projects.length;
     align-items: center;
   }
 
+  .filter-tabs {
+    display: inline-flex;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .filter-tab:hover {
+    color: var(--text-primary);
+  }
+
+  .filter-tab.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .filter-count {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    background: var(--bg-surface);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .filter-tab.active .filter-count {
+    color: var(--text-secondary);
+  }
+
   .filter-indicator {
     width: 6px;
     height: 6px;
@@ -329,19 +466,18 @@ const countAll = projects.length;
   }
 
   .ind-3ds {
-    background: #f5c082;
-    box-shadow: 0 0 6px rgba(245, 192, 130, 0.6);
+    background: var(--accent-orange);
   }
 
   .ind-cad {
-    background: #8fbff7;
-    box-shadow: 0 0 6px rgba(143, 191, 247, 0.6);
+    background: var(--accent-blue);
   }
 
+  /* Grid layout */
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 
   .project-card {
@@ -526,16 +662,17 @@ const countAll = projects.length;
     color: var(--text-tertiary);
   }
 
-  .download-hint {
+  .view-hint {
     display: flex;
     align-items: center;
     gap: 5px;
     font-family: var(--font-mono);
     font-size: 10.5px;
     color: var(--text-secondary);
+    transition: color var(--transition-fast);
   }
 
-  .project-card:hover .download-hint {
+  .project-card:hover .view-hint {
     color: var(--text-primary);
   }
 
