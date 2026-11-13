@@ -87,6 +87,7 @@ html {
   background-color: var(--bg-page);
   color: var(--text-primary);
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color var(--transition-smooth), color var(--transition-smooth);
@@ -310,6 +311,9 @@ img {
   min-height: 110px;
 }
 
+html.modal-open,
 body.modal-open {
-  overflow: hidden;
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none !important;
 }

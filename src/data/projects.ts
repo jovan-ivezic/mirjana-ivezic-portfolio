@@ -61,8 +61,7 @@ export const projects: Project[] = [
       "/images/projects/kuhinja-1.webp",
       "/images/projects/kuhinja-2.webp",
       "/images/projects/kuhinja-3.webp",
-      "/images/projects/kuhinja-4.webp",
-      "/images/projects/kuhinja-5.webp"
+      "/images/projects/kuhinja-4.webp"
     ],
     description: "Projektovanje i vizuelizacija savremene kuhinje povezane sa trpezarijom. Fokus na čistim linijama bez vidljivih ručica (gola profil), integrisanoj radnoj rasveti ispod gornjih ormarića i harmoniji mat tamnih frontova sa kamenom radnom pločom i trpezarijskim ambijentom.",
     tags: ["Kuhinja po meri", "Trpezarija", "Corona Renderer", "Dizajn enterijera"],
@@ -71,7 +70,7 @@ export const projects: Project[] = [
       { label: "Stolarski detalji", value: "Frontovi bez ručica sa pocket mehanizmom" },
       { label: "Materijali", value: "Mat lakirani medijapan, kompozitni kvarc, tamni hrast" },
       { label: "Rasveta", value: "Ugradne LED linije 3000K i dekorativne visilice" },
-      { label: "Broj kadrova", value: "5 detaljnih 3D rendera" }
+      { label: "Broj kadrova", value: "4 detaljna 3D rendera" }
     ]
   },
   {
@@ -84,15 +83,14 @@ export const projects: Project[] = [
     location: "Novi Sad, Srbija",
     area: "24 m²",
     software: ["3ds Max", "Corona"],
-    image: "/images/projects/radna-soba-1.webp",
+    image: "/images/projects/radna-soba-7.webp",
     gallery: [
-      "/images/projects/radna-soba-1.webp",
+      "/images/projects/radna-soba-7.webp",
       "/images/projects/radna-soba-2.webp",
       "/images/projects/radna-soba-3.webp",
       "/images/projects/radna-soba-4.webp",
       "/images/projects/radna-soba-5.webp",
-      "/images/projects/radna-soba-6.webp",
-      "/images/projects/radna-soba-7.webp"
+      "/images/projects/radna-soba-6.webp"
     ],
     description: "Kompleksna vizuelizacija radnog prostora prilagođenog produktivnosti i miru. Projekat obuhvata radni sto sa integrisanim menadžmentom kablova, police po meri sa integrisanim svetlom, fotelju za odmor i dekorativne akustične letvice.",
     tags: ["Home Office", "Radna soba", "Police po meri", "Corona Renderer", "3ds Max"],
@@ -101,7 +99,7 @@ export const projects: Project[] = [
       { label: "Dispozicija", value: "Ergonomski radni sto + zona za odmor" },
       { label: "Rasveta", value: "Difuzna dnevna svetlost i ciljana radna rasveta" },
       { label: "Akcenti", value: "Akustične zidne lamele i topla ambijentalna rasveta" },
-      { label: "Broj kadrova", value: "7 detaljnih 3D rendera" }
+      { label: "Broj kadrova", value: "6 detaljnih 3D rendera" }
     ]
   },
   {

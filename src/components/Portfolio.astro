@@ -207,11 +207,24 @@ const countAll = projects.length;
       }
     }
 
+    function lockScroll() {
+      document.documentElement.classList.add('modal-open');
+      document.body.classList.add('modal-open');
+    }
+
+    function unlockScroll() {
+      if (!modalOverlay?.classList.contains('active') && !lightboxOverlay?.classList.contains('active')) {
+        document.documentElement.classList.remove('modal-open');
+        document.body.classList.remove('modal-open');
+      }
+    }
+
     function openLightbox() {
       const proj = projectsList[currentProjectIndex];
       if (!proj || !lightboxOverlay || !lightboxImg) return;
       lightboxOverlay.classList.add('active');
       lightboxOverlay.setAttribute('aria-hidden', 'false');
+      lockScroll();
       syncLightbox();
     }
 
@@ -219,6 +232,7 @@ const countAll = projects.length;
       if (lightboxOverlay) {
         lightboxOverlay.classList.remove('active');
         lightboxOverlay.setAttribute('aria-hidden', 'true');
+        unlockScroll();
       }
     }
 
@@ -365,7 +379,7 @@ const countAll = projects.length;
       if (modalOverlay) {
         modalOverlay.classList.add('active');
         modalOverlay.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
+        lockScroll();
         requestAnimationFrame(() => {
           if (modalBody) modalBody.scrollTop = 0;
         });
@@ -376,7 +390,7 @@ const countAll = projects.length;
       if (modalOverlay) {
         modalOverlay.classList.remove('active');
         modalOverlay.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
+        unlockScroll();
       }
     }
 
@@ -521,6 +535,13 @@ const countAll = projects.length;
     }, () => {
       const proj = projectsList[currentProjectIndex];
       renderGalleryImage(proj, currentGalleryIndex - 1);
+    });
+
+    // Prevent background touch scrolling when touching backdrops
+    [modalBackdrop, lightboxBackdrop].forEach((el) => {
+      el?.addEventListener('touchmove', (e: TouchEvent) => {
+        e.preventDefault();
+      }, { passive: false });
     });
   });
 </script>
