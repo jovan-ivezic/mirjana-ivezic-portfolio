@@ -56,7 +56,7 @@ export const projects: Project[] = [
     location: "Novi Sad, Srbija",
     area: "18 m²",
     software: ["3ds Max", "Corona", "AutoCAD"],
-    image: "/images/projects/kuhinja-1.webp",
+    image: "/images/projects/kuhinja-2.webp",
     gallery: [
       "/images/projects/kuhinja-2.webp",
       "/images/projects/kuhinja-1.webp",
