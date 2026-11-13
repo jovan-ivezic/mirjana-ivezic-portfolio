@@ -58,8 +58,8 @@ export const projects: Project[] = [
     software: ["3ds Max", "Corona", "AutoCAD"],
     image: "/images/projects/kuhinja-1.webp",
     gallery: [
-      "/images/projects/kuhinja-1.webp",
       "/images/projects/kuhinja-2.webp",
+      "/images/projects/kuhinja-1.webp",
       "/images/projects/kuhinja-3.webp",
       "/images/projects/kuhinja-4.webp"
     ],
