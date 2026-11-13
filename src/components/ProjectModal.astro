@@ -34,11 +34,11 @@ import { projects } from '../data/projects';
         <!-- Visual display column (Gallery) -->
         <div class="modal-visual-col">
           <div class="modal-image-wrapper">
-            <img id="modal-image" src="" alt="" class="modal-preview-img" />
+            <img id="modal-image" src="" alt="" class="modal-preview-img" title="Kliknite za prikaz preko celog ekrana" />
 
             <!-- Gallery Counter Badge -->
             <div class="gallery-counter-badge" id="modal-gallery-badge">
-              <span id="modal-gallery-counter">1 / 5</span>
+              <span id="modal-gallery-counter">1 / 4</span>
             </div>
 
             <!-- In-image Prev/Next Arrows -->
@@ -53,13 +53,13 @@ import { projects } from '../data/projects';
               </svg>
             </button>
 
-            <!-- Open Full JPG Link -->
-            <a id="modal-view-full-jpg" href="" target="_blank" rel="noopener noreferrer" class="view-full-jpg-link">
+            <!-- Lightbox trigger button -->
+            <button type="button" id="modal-view-full-jpg" class="view-full-jpg-link" aria-label="Uvećaj prikaz preko celog ekrana">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               </svg>
-              <span>Otvori u punoj rezoluciji</span>
-            </a>
+              <span>Uvećan prikaz</span>
+            </button>
           </div>
 
           <!-- Thumbnails Row -->
@@ -72,7 +72,7 @@ import { projects } from '../data/projects';
         <div class="modal-info-col">
           <div class="modal-info-content">
             <div class="modal-meta-top">
-              <span id="modal-location" class="mono-label">BEOGRAD</span>
+              <span id="modal-location" class="mono-label">NOVI SAD</span>
               <span class="meta-separator">•</span>
               <span id="modal-year" class="mono-label">2026</span>
               <span class="meta-separator">•</span>
@@ -105,12 +105,12 @@ import { projects } from '../data/projects';
 
           <!-- Action bar -->
           <div class="modal-action-bar">
-            <a id="modal-fullres-action" href="" target="_blank" rel="noopener noreferrer" class="btn btn-secondary action-btn">
+            <button type="button" id="modal-fullres-action" class="btn btn-secondary action-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               </svg>
               <span>Uvećan prikaz</span>
-            </a>
+            </button>
 
             <a href="#contact" id="modal-contact-btn" class="btn btn-primary action-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -141,6 +141,44 @@ import { projects } from '../data/projects';
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Fullscreen In-App Lightbox Overlay -->
+<div id="lightbox-overlay" class="lightbox-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+
+  <div class="lightbox-topbar">
+    <div class="lightbox-meta">
+      <span id="lightbox-title" class="lightbox-title">Naziv projekta</span>
+      <span class="meta-sep">•</span>
+      <span id="lightbox-counter" class="mono-label lightbox-counter-tag">1 / 4</span>
+    </div>
+
+    <button type="button" id="lightbox-close-btn" class="lightbox-close-btn" aria-label="Zatvori uvećan prikaz">
+      <span class="kbd-key">ESC</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="lightbox-stage">
+    <button type="button" id="lightbox-prev-btn" class="lightbox-nav-btn prev-btn" aria-label="Prethodni kadar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+
+    <div class="lightbox-img-frame" id="lightbox-img-frame">
+      <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+    </div>
+
+    <button type="button" id="lightbox-next-btn" class="lightbox-nav-btn next-btn" aria-label="Sledeći kadar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -317,6 +355,7 @@ import { projects } from '../data/projects';
     overflow: hidden;
     background: #000;
     border: 1px solid var(--border-subtle);
+    cursor: zoom-in;
   }
 
   .modal-preview-img {
@@ -324,7 +363,11 @@ import { projects } from '../data/projects';
     height: 100%;
     object-fit: contain;
     display: block;
-    transition: opacity 180ms ease;
+    transition: opacity 180ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .modal-image-wrapper:hover .modal-preview-img {
+    transform: scale(1.015);
   }
 
   .gallery-counter-badge {
@@ -387,8 +430,8 @@ import { projects } from '../data/projects';
     gap: 6px;
     padding: 6px 12px;
     border-radius: var(--radius-sm);
-    background: rgba(12, 13, 15, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(12, 13, 15, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     font-size: 11.5px;
     font-weight: 500;
     color: #fff;
@@ -396,11 +439,13 @@ import { projects } from '../data/projects';
     transition: all var(--transition-fast);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
+    cursor: pointer;
   }
 
   .view-full-jpg-link:hover {
-    background: rgba(12, 13, 15, 0.95);
+    background: rgba(12, 13, 15, 1);
     transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   /* Thumbnails strip */
@@ -606,6 +651,129 @@ import { projects } from '../data/projects';
     color: var(--text-tertiary);
   }
 
+  /* Fullscreen In-App Lightbox */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth);
+  }
+
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 7, 8, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .lightbox-topbar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+  }
+
+  .lightbox-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+  }
+
+  .lightbox-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  .lightbox-counter-tag {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .lightbox-close-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .lightbox-close-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .lightbox-stage {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 24px;
+    min-height: 0;
+  }
+
+  .lightbox-img-frame {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px;
+  }
+
+  .lightbox-img {
+    max-width: 92vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
+    transition: opacity 120ms ease, transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lightbox-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    margin: 0 16px;
+  }
+
+  .lightbox-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.08);
+  }
+
   @media (max-width: 920px) {
     .modal-body {
       grid-template-columns: 1fr;
@@ -627,6 +795,11 @@ import { projects } from '../data/projects';
     }
     .keyboard-hints {
       display: none;
+    }
+    .lightbox-nav-btn {
+      width: 40px;
+      height: 40px;
+      margin: 0 4px;
     }
   }
 </style>

@@ -29,9 +29,8 @@ export const projects: Project[] = [
     location: "Novi Sad, Srbija",
     area: "52 m²",
     software: ["3ds Max 2024", "Corona Renderer"],
-    image: "/images/projects/dnevna-1.webp",
+    image: "/images/projects/dnevna-2.webp",
     gallery: [
-      "/images/projects/dnevna-1.webp",
       "/images/projects/dnevna-2.webp",
       "/images/projects/dnevna-3.webp",
       "/images/projects/dnevna-4.webp",
@@ -44,7 +43,7 @@ export const projects: Project[] = [
       { label: "Osvetljenje", value: "Sun & Sky prirodno svetlo + 2700K LED akcenti" },
       { label: "Materijali", value: "Prirodni furnir hrasta, travertin, bukle tkanina" },
       { label: "Postprodukcija", value: "Corona VFB kolor balans i toniranje" },
-      { label: "Broj kadrova", value: "5 fotorealističnih 3D rendera" }
+      { label: "Broj kadrova", value: "4 fotorealistična 3D rendera" }
     ]
   },
   {
