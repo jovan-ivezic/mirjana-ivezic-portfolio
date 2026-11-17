@@ -602,8 +602,9 @@ import { projects } from '../data/projects';
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    gap: 16px;
     font-size: 12px;
-    padding: 4px 0;
+    padding: 6px 0;
     border-bottom: 1px solid var(--border-subtle);
   }
 
@@ -615,12 +616,15 @@ import { projects } from '../data/projects';
     color: var(--text-tertiary);
     font-family: var(--font-mono);
     font-size: 11px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   :global(.spec-row-val) {
     color: var(--text-primary);
     font-weight: 500;
     text-align: right;
+    line-height: 1.4;
   }
 
   .software-tags-row {

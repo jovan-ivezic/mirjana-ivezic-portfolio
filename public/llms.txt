@@ -17,8 +17,9 @@
 - Nameštaj po meri: Projektovanje funkcionalnih kuhinja, radnih soba i modularnih plakara sa preciznim stolarskim detaljima.
 
 ## Prikazani portfolio radovi
-1. Garsonjera do 40 m² (Novi Sad, Srbija) — 38 m²: Fotorealistična 3D vizuelizacija kompaktnog prostora otvorenog koncepta sa integrisanom trpezarijom i zonom za odmor.
-2. Minimalistička kuhinja sa trpezarijom (Novi Sad, Srbija) — 18 m²: 3D modelovanje moderne kuhinje sa skrivenom LED rasvetom i frontovima bez ručica.
-3. Home Office (Novi Sad, Srbija) — 24 m²: Multifunkcionalni enterijer za rad, radni sto po meri i akustične zidne lamele.
-4. Glavna arhitektonska osnova kuće (Novi Sad, Srbija) — 100 m²: AutoCAD 2D tehnički nacrt i dispozicija nameštaja porodične kuće.
+1. Multifunkcionalni sprat kuće sa barom (Novi Sad, Srbija) — 30 m²: 3D vizuelizacija otvorenog koncepta stambene etaže sa zonom za odmor, kamenim TV zidom, mini kuhinjom sa šankom i vinskim blokom, i radnim prostorom.
+2. Garsonjera do 40 m² (Novi Sad, Srbija) — 38 m²: Fotorealistična 3D vizuelizacija kompaktnog prostora otvorenog koncepta sa integrisanom trpezarijom i zonom za odmor.
+3. Minimalistička kuhinja sa trpezarijom (Novi Sad, Srbija) — 18 m²: 3D modelovanje moderne kuhinje sa skrivenom LED rasvetom i frontovima bez ručica.
+4. Home Office (Novi Sad, Srbija) — 24 m²: Multifunkcionalni enterijer za rad, radni sto po meri i akustične zidne lamele.
+5. Glavna arhitektonska osnova kuće (Novi Sad, Srbija) — 100 m²: AutoCAD 2D tehnički nacrt i dispozicija nameštaja porodične kuće.
 

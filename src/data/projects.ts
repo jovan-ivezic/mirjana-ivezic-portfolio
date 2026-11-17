@@ -20,6 +20,39 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "multifunkcionalni-sprat-kuce",
+    title: "Multifunkcionalni sprat kuće sa barom",
+    subtitle: "Dnevna zona, mini kuhinja sa šankom i radni prostor",
+    category: "3dsmax",
+    categoryLabel: "3ds Max",
+    year: "2026",
+    location: "Novi Sad, Srbija",
+    area: "30 m²",
+    software: ["3ds Max", "Corona"],
+    image: "/images/projects/sprat-kuce-3.webp",
+    gallery: [
+      "/images/projects/sprat-kuce-3.webp",
+      "/images/projects/sprat-kuce-1.webp",
+      "/images/projects/sprat-kuce-2.webp",
+      "/images/projects/sprat-kuce-4.webp",
+      "/images/projects/sprat-kuce-5.webp",
+      "/images/projects/sprat-kuce-6.webp",
+      "/images/projects/sprat-kuce-7.webp",
+      "/images/projects/sprat-kuce-8.webp",
+      "/images/projects/sprat-kuce-9.webp",
+      "/images/projects/sprat-kuce-10.webp",
+      "/images/projects/sprat-kuce-11.webp"
+    ],
+    description: "Projektovanje i 3D vizuelizacija višenamenskog sprata porodične kuće. Na 30 m² skladno su integrisani dnevni boravak sa akcentnim kamenim TV zidom, mini kuhinja sa šankom i namenskim vinskim kutkom, kao i radni prostor prilagođen kosinama krova.",
+    tags: ["Sprat kuće", "Mini kuhinja & Bar", "TV kameni zid", "Home Office", "Corona Renderer"],
+    specifications: [
+      { label: "Render sistem", value: "Corona Renderer (Fizikalna kamera)" },
+      { label: "Materijali", value: "Crni mermer, reljefni kamen, hrastov parket" },
+      { label: "Rasveta", value: "Ambijentalna 2700K LED rasveta i visilice" },
+      { label: "Broj kadrova", value: "11 fotorealističnih 3D rendera" }
+    ]
+  },
+  {
     id: "garsonjera-do-40m2",
     title: "Garsonjera do 40 m²",
     subtitle: "Fotorealistična 3D vizuelizacija kompaktnog prostora",
